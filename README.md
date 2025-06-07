@@ -259,4 +259,5 @@ Chỉnh sửa file `appsettings.json` để cấu hình kết nối database và
 
 <div align="center">
   <p>Được tạo bởi [NP-Sinh]</p>
+  <p>Link Youtube: <a href="https://youtu.be/V0CLGk017KM">Demo JWT Auth</a></p>
 </div>
