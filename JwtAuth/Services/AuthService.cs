@@ -1,34 +1,103 @@
-﻿namespace JwtAuth.Services
+using JwtAuth.Models.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
+
+namespace JwtAuth.Services
 {
     public interface IAuthService
     {
-        Task<dynamic> login();
-        Task<dynamic> register();
-        Task<dynamic> logout();
-        Task<dynamic> info();
-
+        Task<User?> GetUserByIdAsync(int userId);
+        Task<User?> GetUserByUsernameAsync(string username);
+        Task<bool> IsUsernameUniqueAsync(string username);
+        Task<bool> ValidateUserPasswordAsync(string username, string password);
+        Task<User> RegisterUserAsync(string username, string email, string password);
+        Task<User?> AuthenticateAsync(string username, string password);
     }
+
     public class AuthService : IAuthService
     {
-        public async Task<dynamic> login()
+        private readonly JwtAuthContext _context;
+
+        public AuthService(JwtAuthContext context)
         {
-            // Logic for login
-            return Task.FromResult<dynamic>(new { message = "Login successful" });
+            _context = context;
         }
-        public async Task<dynamic> register()
+
+        public async Task<User?> GetUserByIdAsync(int userId)
         {
-            // Logic for registration
-            return Task.FromResult<dynamic>(new { message = "Registration successful" });
+            return await _context.Users.FindAsync(userId);
         }
-        public async Task<dynamic> logout()
+
+        public async Task<User?> GetUserByUsernameAsync(string username)
         {
-            // Logic for logout
-            return Task.FromResult<dynamic>(new { message = "Logout successful" });
+            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
         }
-        public async Task<dynamic> info()
+
+        public async Task<bool> IsUsernameUniqueAsync(string username)
         {
-            // Logic to get user info
-            return Task.FromResult<dynamic>(new { message = "User info retrieved successfully" });
+            return !await _context.Users.AnyAsync(u => u.Username == username);
+        }
+
+        public async Task<bool> ValidateUserPasswordAsync(string username, string password)
+        {
+            var user = await GetUserByUsernameAsync(username);
+            if (user == null) return false;
+            
+            return VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt);
+        }
+
+        public async Task<User?> AuthenticateAsync(string username, string password)
+        {
+            var user = await GetUserByUsernameAsync(username);
+            if (user == null) return null;
+            
+            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+                return null;
+                
+            return user;
+        }
+
+        public async Task<User> RegisterUserAsync(string username, string email, string password)
+        {
+            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            var user = new User
+            {
+                Username = username,
+                Email = email,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                Role = "User",
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return user;
+        }
+
+        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            }
+        }
+
+        private bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
+        {
+            using (var hmac = new HMACSHA512(storedSalt))
+            {
+                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                for (int i = 0; i < computedHash.Length; i++)
+                {
+                    if (computedHash[i] != storedHash[i]) return false;
+                }
+            }
+            return true;
         }
     }
 }

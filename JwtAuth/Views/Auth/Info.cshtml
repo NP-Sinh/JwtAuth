@@ -1,5 +1,92 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+@using System.Security.Claims
 @{
+    ViewData["Title"] = "User Information";
 }
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">User Information</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Basic Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <dl class="row">
+                                        <dt class="col-sm-4">Username:</dt>
+                                        <dd class="col-sm-8">@User.Identity?.Name</dd>
+
+                                        <dt class="col-sm-4">User ID:</dt>
+                                        <dd class="col-sm-8">@User.FindFirst(ClaimTypes.NameIdentifier)?.Value</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Roles</h5>
+                                </div>
+                                <div class="card-body">
+                                    @if (User.Claims.Any(c => c.Type == ClaimTypes.Role))
+                                    {
+                                        <ul class="list-unstyled">
+                                            @foreach (var role in User.FindAll(ClaimTypes.Role))
+                                            {
+                                                <li>@role.Value</li>
+                                            }
+                                        </ul>
+                                    }
+                                    else
+                                    {
+                                        <p>No roles assigned.</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">Claims</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var claim in User.Claims)
+                                        {
+                                            <tr>
+                                                <td>@claim.Type</td>
+                                                <td>@claim.Value</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 text-center">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary me-2">Home</a>
+                        <form asp-action="Logout" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-danger">Logout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
