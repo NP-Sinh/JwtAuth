@@ -1,5 +1,5 @@
-@{
-    ViewData["Title"] = "Test Authentication";
+﻿@{
+    ViewData["Title"] = "Kiểm tra xác thực";
 }
 
 <div class="container mt-5">
@@ -7,33 +7,33 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header bg-success text-white">
-                    <h2 class="text-center">Authentication Successful!</h2>
+                    <h2 class="text-center">Xác thực thành công!</h2>
                 </div>
                 <div class="card-body text-center">
                     <div class="mb-4">
                         <i class="fas fa-check-circle fa-5x text-success mb-3"></i>
-                        <h3>Welcome, @User.Identity?.Name!</h3>
-                        <p class="lead">You have successfully accessed a protected resource.</p>
+                        <h3>Chào mừng, @User.Identity?.Name!</h3>
+                        <p class="lead">Bạn đã truy cập thành công vào một tài nguyên được bảo vệ.</p>
                     </div>
-                    
+
                     <div class="alert alert-info">
-                        <h5>Your JWT Token:</h5>
+                        <h5>Token JWT của bạn:</h5>
                         <div class="p-2 bg-light rounded text-start">
                             <code>@Context.Request.Cookies["jwt"]</code>
                         </div>
-                        <p class="mt-2 small text-muted">This token is stored in an HTTP-only cookie.</p>
+                        <p class="mt-2 small text-muted">Token này được lưu trong cookie chỉ dùng cho HTTP.</p>
                     </div>
-                    
+
                     <div class="mt-4">
                         <a asp-controller="Home" asp-action="Index" class="btn btn-primary me-2">
-                            <i class="fas fa-home"></i> Home
+                            <i class="fas fa-home"></i> Trang chủ
                         </a>
                         <a asp-controller="Auth" asp-action="Info" class="btn btn-info me-2">
-                            <i class="fas fa-user"></i> View Profile
+                            <i class="fas fa-user"></i> Xem thông tin
                         </a>
                         <form asp-action="Logout" method="post" class="d-inline">
                             <button type="submit" class="btn btn-danger">
-                                <i class="fas fa-sign-out-alt"></i> Logout
+                                <i class="fas fa-sign-out-alt"></i> Đăng xuất
                             </button>
                         </form>
                     </div>
@@ -50,7 +50,7 @@
             border: none;
             border-radius: 0.5rem;
         }
-        
+
         .card-header {
             border-bottom: 1px solid rgba(0, 0, 0, 0.125);
             border-top-left-radius: 0.5rem !important;

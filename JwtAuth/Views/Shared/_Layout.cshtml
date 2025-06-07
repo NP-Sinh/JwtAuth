@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="vi">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - JWT Authentication</title>
+    <title>@ViewData["Title"] - Xác thực JWT</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -15,31 +15,31 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                    <i class="fas fa-lock me-2"></i>JWT Auth
+                    <i class="fas fa-lock me-2"></i>Xác thực JWT
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" 
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Chuyển đổi điều hướng">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="Index">
-                                <i class="fas fa-home me-1"></i> Home
+                                <i class="fas fa-home me-1"></i> Trang chủ
                             </a>
                         </li>
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Auth" asp-action="TestAuth">
-                                    <i class="fas fa-shield-alt me-1"></i> Test Auth
+                                    <i class="fas fa-shield-alt me-1"></i> Kiểm tra xác thực
                                 </a>
                             </li>
                             @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link" asp-controller="Auth" asp-action="AdminOnly">
-                                        <i class="fas fa-user-shield me-1"></i> Admin Panel
+                                        <i class="fas fa-user-shield me-1"></i> Bảng quản trị
                                     </a>
                                 </li>
                             }
@@ -49,21 +49,21 @@
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fas fa-user-circle me-1"></i> @User.Identity.Name
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <li>
                                         <a class="dropdown-item" asp-controller="Auth" asp-action="Info">
-                                            <i class="fas fa-user me-2"></i>Profile
+                                            <i class="fas fa-user me-2"></i> Hồ sơ cá nhân
                                         </a>
                                     </li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <form class="form-inline" asp-controller="Auth" asp-action="Logout" method="post">
                                             <button type="submit" class="dropdown-item">
-                                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                                <i class="fas fa-sign-out-alt me-2"></i> Đăng xuất
                                             </button>
                                         </form>
                                     </li>
@@ -74,12 +74,12 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Auth" asp-action="Login">
-                                    <i class="fas fa-sign-in-alt me-1"></i> Login
+                                    <i class="fas fa-sign-in-alt me-1"></i> Đăng nhập
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Auth" asp-action="Register">
-                                    <i class="fas fa-user-plus me-1"></i> Register
+                                    <i class="fas fa-user-plus me-1"></i> Đăng ký
                                 </a>
                             </li>
                         }
@@ -95,7 +95,7 @@
             {
                 <div class="alert alert-info alert-dismissible fade show" role="alert">
                     @TempData["Message"]
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
                 </div>
             }
             @RenderBody()
@@ -104,8 +104,8 @@
 
     <footer class="border-top footer text-muted">
         <div class="container text-center">
-            &copy; @DateTime.Now.Year - JWT Authentication Demo - 
-            <a asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
+            &copy; @DateTime.Now.Year - Demo Xác thực JWT -
+            <a asp-controller="Home" asp-action="Privacy">Chính sách bảo mật</a>
         </div>
     </footer>
 

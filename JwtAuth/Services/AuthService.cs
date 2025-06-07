@@ -1,4 +1,4 @@
-using JwtAuth.Models.Entities;
+﻿using JwtAuth.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
@@ -23,12 +23,12 @@ namespace JwtAuth.Services
         {
             _context = context;
         }
-
+        // lấy theo Id
         public async Task<User?> GetUserByIdAsync(int userId)
         {
             return await _context.Users.FindAsync(userId);
         }
-
+        // lấy theo Username
         public async Task<User?> GetUserByUsernameAsync(string username)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
@@ -38,7 +38,7 @@ namespace JwtAuth.Services
         {
             return !await _context.Users.AnyAsync(u => u.Username == username);
         }
-
+        // Xác thực mật khẩu
         public async Task<bool> ValidateUserPasswordAsync(string username, string password)
         {
             var user = await GetUserByUsernameAsync(username);
@@ -46,7 +46,7 @@ namespace JwtAuth.Services
             
             return VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt);
         }
-
+        // Nếu người dùng tồn tại và mật khẩu hợp lệ → trả về user
         public async Task<User?> AuthenticateAsync(string username, string password)
         {
             var user = await GetUserByUsernameAsync(username);
@@ -77,7 +77,7 @@ namespace JwtAuth.Services
 
             return user;
         }
-
+        // Tạo salt ngẫu nhiên và tính toán hash của mật khẩu
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512())
@@ -86,7 +86,7 @@ namespace JwtAuth.Services
                 passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
         }
-
+        // Kiểm tra mật khẩu nhập vào có khớp với hash đã lưu không?
         private bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
         {
             using (var hmac = new HMACSHA512(storedSalt))

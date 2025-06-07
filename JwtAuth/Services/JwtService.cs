@@ -1,4 +1,4 @@
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -21,7 +21,7 @@ namespace JwtAuth.Services
         {
             _configuration = configuration;
         }
-
+        // Tạo JWT token
         public string GenerateToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -32,7 +32,7 @@ namespace JwtAuth.Services
                 {
                     new Claim(ClaimTypes.Name, user.Username),
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role, user.Role ?? "User") // Default role is "User" if not specified
+                    new Claim(ClaimTypes.Role, user.Role ?? "User")
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(double.Parse(_configuration["JwtSettings:ExpirationMinutes"]!)),
                 Issuer = _configuration["JwtSettings:Issuer"],
@@ -45,7 +45,7 @@ namespace JwtAuth.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
-
+        // Xác thực JWT token
         public ClaimsPrincipal? ValidateToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();

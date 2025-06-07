@@ -22,7 +22,11 @@ namespace JwtAuth.Controllers
             _jwtService = jwtService;
             _configuration = configuration;
         }
-
+        [Authorize]
+        public IActionResult Index()
+        {
+            return View();
+        }
         [HttpGet("login")]
         public IActionResult Login(string? returnUrl = null)
         {
@@ -41,7 +45,6 @@ namespace JwtAuth.Controllers
                 return View(model);
             }
 
-            // Sử dụng AuthService để xác thực người dùng
             var user = await _authService.AuthenticateAsync(model.Username, model.Password);
 
             if (user == null)
@@ -50,7 +53,6 @@ namespace JwtAuth.Controllers
                 return View(model);
             }
 
-            // Sử dụng JwtService để tạo token
             var token = _jwtService.GenerateToken(user);
 
             // Lưu JWT vào cookie

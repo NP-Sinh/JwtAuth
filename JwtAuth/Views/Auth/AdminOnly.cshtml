@@ -1,4 +1,4 @@
-@{
+﻿@{
     ViewData["Title"] = "Admin Dashboard";
 }
 
@@ -7,65 +7,66 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header bg-dark text-white">
-                    <h2 class="text-center"><i class="fas fa-shield-alt me-2"></i>Admin Dashboard</h2>
+                    <h2 class="text-center"><i class="fas fa-shield-alt me-2"></i>Bảng điều khiển Quản trị</h2>
                 </div>
                 <div class="card-body text-center">
                     <div class="mb-4">
                         <i class="fas fa-user-shield fa-5x text-dark mb-3"></i>
-                        <h3>Welcome, @User.Identity?.Name</h3>
-                        <p class="lead">You have successfully accessed the admin-only area.</p>
+                        <h3>Xin chào, @User.Identity?.Name</h3>
+                        <p class="lead">Bạn đã truy cập thành công vào khu vực dành riêng cho quản trị viên.</p>
                     </div>
-                    
+
                     <div class="row mb-4">
                         <div class="col-md-6 mb-3">
                             <div class="card h-100">
                                 <div class="card-body">
-                                    <h5 class="card-title">User Management</h5>
-                                    <p class="card-text">Manage application users and their permissions.</p>
-                                    <a href="#" class="btn btn-outline-primary">Go to Users</a>
+                                    <h5 class="card-title">Quản lý người dùng</h5>
+                                    <p class="card-text">Quản lý người dùng và quyền truy cập của họ trong hệ thống.</p>
+                                    <a href="#" class="btn btn-outline-primary">Đi tới Người dùng</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="card h-100">
                                 <div class="card-body">
-                                    <h5 class="card-title">System Settings</h5>
-                                    <p class="card-text">Configure application settings and preferences.</p>
-                                    <a href="#" class="btn btn-outline-primary">Go to Settings</a>
+                                    <h5 class="card-title">Cài đặt hệ thống</h5>
+                                    <p class="card-text">Cấu hình các thiết lập và tùy chọn cho ứng dụng.</p>
+                                    <a href="#" class="btn btn-outline-primary">Đi tới Cài đặt</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="alert alert-warning">
-                        <h5><i class="fas fa-exclamation-triangle"></i> Admin Privileges</h5>
-                        <p class="mb-0">You have access to all administrative functions. Use them responsibly.</p>
+                        <h5><i class="fas fa-exclamation-triangle"></i> Quyền quản trị</h5>
+                        <p class="mb-0">Bạn có quyền truy cập tất cả chức năng quản trị. Hãy sử dụng một cách có trách nhiệm.</p>
                     </div>
-                    
+
                     <div class="mt-4">
                         <a asp-controller="Home" asp-action="Index" class="btn btn-primary me-2">
-                            <i class="fas fa-home"></i> Home
+                            <i class="fas fa-home"></i> Trang chủ
                         </a>
                         <a asp-controller="Auth" asp-action="Info" class="btn btn-info me-2">
-                            <i class="fas fa-user"></i> My Profile
+                            <i class="fas fa-user"></i> Hồ sơ của tôi
                         </a>
                         <a asp-controller="Auth" asp-action="TestAuth" class="btn btn-secondary me-2">
-                            <i class="fas fa-lock"></i> Test Auth
+                            <i class="fas fa-lock"></i> Kiểm tra quyền
                         </a>
                         <form asp-action="Logout" method="post" class="d-inline">
                             <button type="submit" class="btn btn-danger">
-                                <i class="fas fa-sign-out-alt"></i> Logout
+                                <i class="fas fa-sign-out-alt"></i> Đăng xuất
                             </button>
                         </form>
                     </div>
                 </div>
                 <div class="card-footer text-muted text-center">
-                    <small>Last login: @DateTime.Now.ToString("f")</small>
+                    <small>Đăng nhập lần cuối: @DateTime.Now.ToString("f")</small>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 @section Styles {
     <style>

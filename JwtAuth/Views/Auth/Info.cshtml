@@ -1,6 +1,6 @@
-@using System.Security.Claims
+﻿@using System.Security.Claims
 @{
-    ViewData["Title"] = "User Information";
+    ViewData["Title"] = "Thông tin người dùng";
 }
 
 <div class="container mt-5">
@@ -8,21 +8,21 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="text-center">User Information</h2>
+                    <h2 class="text-center">Thông tin người dùng</h2>
                 </div>
                 <div class="card-body">
                     <div class="row mb-4">
                         <div class="col-md-6">
                             <div class="card mb-3">
                                 <div class="card-header bg-light">
-                                    <h5 class="mb-0">Basic Information</h5>
+                                    <h5 class="mb-0">Thông tin cơ bản</h5>
                                 </div>
                                 <div class="card-body">
                                     <dl class="row">
-                                        <dt class="col-sm-4">Username:</dt>
+                                        <dt class="col-sm-4">Tên đăng nhập:</dt>
                                         <dd class="col-sm-8">@User.Identity?.Name</dd>
 
-                                        <dt class="col-sm-4">User ID:</dt>
+                                        <dt class="col-sm-4">Mã người dùng:</dt>
                                         <dd class="col-sm-8">@User.FindFirst(ClaimTypes.NameIdentifier)?.Value</dd>
                                     </dl>
                                 </div>
@@ -31,7 +31,7 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header bg-light">
-                                    <h5 class="mb-0">Roles</h5>
+                                    <h5 class="mb-0">Vai trò</h5>
                                 </div>
                                 <div class="card-body">
                                     @if (User.Claims.Any(c => c.Type == ClaimTypes.Role))
@@ -45,7 +45,7 @@
                                     }
                                     else
                                     {
-                                        <p>No roles assigned.</p>
+                                        <p>Chưa có vai trò nào được gán.</p>
                                     }
                                 </div>
                             </div>
@@ -54,15 +54,15 @@
 
                     <div class="card">
                         <div class="card-header bg-light">
-                            <h5 class="mb-0">Claims</h5>
+                            <h5 class="mb-0">Danh sách Claims</h5>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Type</th>
-                                            <th>Value</th>
+                                            <th>Loại</th>
+                                            <th>Giá trị</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -80,9 +80,9 @@
                     </div>
 
                     <div class="mt-4 text-center">
-                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary me-2">Home</a>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary me-2">Trang chủ</a>
                         <form asp-action="Logout" method="post" class="d-inline">
-                            <button type="submit" class="btn btn-danger">Logout</button>
+                            <button type="submit" class="btn btn-danger">Đăng xuất</button>
                         </form>
                     </div>
                 </div>
